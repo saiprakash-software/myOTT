@@ -1,0 +1,47 @@
+{% extends 'videos/base.html' %}
+{% block content %}
+<style>
+  .register-container {
+      width: 300px;
+      margin: 80px auto;
+      padding: 20px;
+      background: #1e1e1e;
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      text-align: center;
+  }
+  .register-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #333;
+      background: #2a2a2a;
+      color: white;
+  }
+  .register-container button {
+      padding: 10px;
+      width: 100%;
+      background: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  .register-container a {
+      color: #00bfff;
+      text-decoration: none;
+  }
+</style>
+
+<div class="register-container">
+  <h2>Register</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+</div>
+{% endblock %}

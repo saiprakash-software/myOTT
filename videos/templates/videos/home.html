@@ -1,0 +1,171 @@
+{% extends 'videos/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* Global styles */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background-color: #0e0e0e;
+    color: #e0e0e0;
+}
+
+/* Header */
+header {
+    background: #111;
+    padding: 15px 30px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(68, 66, 66, 0.5);
+}
+
+header h1 a {
+    font-size: 24px;
+    color: #ff4757;
+    text-decoration: none;
+}
+
+header nav a {
+    margin-left: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #ff4757;
+}
+
+/* Search bar */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    gap: 10px;
+    max-width: 800px;
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: #2c2c2c;
+    color: #fff;
+}
+
+.search-form input::placeholder {
+    color: #aaa;
+}
+
+.search-form button {
+    padding: 12px 20px;
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.3s;
+}
+
+.search-form button:hover {
+    background-color: #ff2e40;
+}
+
+/* Video Grid */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    padding: 30px;
+}
+
+/* Video Card */
+.video-card {
+    background: #1e1e1e;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.video-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
+}
+
+.video-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.video-card h3 {
+    padding: 10px 0 5px;
+    font-size: 18px;
+    color: #f0f0f0;
+}
+
+.video-card p {
+    font-size: 14px;
+    color: #888;
+}
+
+.logo {
+    height: 100px;
+    width: 150px;
+    vertical-align: middle;
+}
+
+.greeting-box {
+    text-align: center;
+    margin: 20px 0;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+</style>
+
+{% if user.is_authenticated %}
+    <div class="greeting-box">
+        <h2>Helloo, {{ user.username }} </h2>
+    </div>
+{% endif %}
+
+<form method="get" action="/" class="search-form">
+    <input type="text" name="q" placeholder="Search videos..." value="{{ query|default:'' }}">
+    <button type="submit">Search</button>
+</form>
+
+<h2 style="text-align:center; margin-top: 20px;">Latest Videos</h2>
+<div class="video-grid">
+    {% for video in videos %}
+        <div class="video-card">
+            <a href="{% url 'video_detail' video.pk %}">
+                {% if video.thumbnail and video.thumbnail.url %}
+                    <img src="{{ video.thumbnail.url }}" alt="Thumbnail">
+                {% else %}
+                    <img src="{% static 'images/default-thumbnail.jpg' %}" alt="No thumbnail">
+                {% endif %}
+                <p>{{ video.views }} views</p>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="bottom-section" style="margin-top: 40px; padding: 20px; background-color: #1e1e1e; color: #fff; text-align: center;">
+    <h3>Enjoy streaming your favorite content!</h3>
+    <p>More features like watchlists, comments, subscriptions, and user profiles coming soon.</p>
+    <p>&copy; 2025 My OTT Platform</p>
+</div>
+
+{% endblock %}

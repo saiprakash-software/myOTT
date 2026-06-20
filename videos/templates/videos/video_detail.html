@@ -1,0 +1,49 @@
+{% extends 'videos/base.html' %}
+{% block content %}
+<style>
+    .video-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 40px auto;
+        max-width: 90%;
+    }
+
+    video {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        border: 2px solid #7f4ad4;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(127, 74, 212, 0.5);
+    }
+
+    h2, p {
+        text-align: center;
+        color: #fff;
+        margin: 10px auto;
+    }
+
+    body {
+        background-color: #121212;
+        color: white;
+    }
+</style>
+
+<h2>{{ video.title }}</h2>
+
+
+<div class="video-container">
+    <video autoplay muted controls playsinline>
+        <source src="{{ video.video_file.url }}" type="video/mp4">
+        <source src="{{ video.video_file.url }}" type="video/x-matroska"> 
+        Your browser does not support the video tag.
+    </video>
+</div>
+<p>{{ video.description }}</p>
+<p style="text-align: center;">Views: {{ video.views }}</p>
+{% endblock %}
+
+<a href="{{ video.video_file.url }}" target="_blank" class="external-player">
+    ▶️ Play in VLC or External Player
+</a>
